@@ -15,23 +15,28 @@ class Virtual extends VacationDriver {
 
     private $db, $domain, $domain_id, $goto = "";
     private $db_user;
-    
+
     public function init() {
         // Use the DSN from db.inc.php or a dedicated DSN defined in config.ini
 
         if (empty($this->cfg['dsn'])) {
             $this->db = $this->rcmail->db;
-            $dsn = MDB2::parseDSN($this->rcmail->config->get('db_dsnw'));
-	} else {
-	    if(!class_exists('rcube_db')) {
-	            $this->db = new rcube_mdb2($this->cfg['dsn'], '', FALSE);
-	    } else {
-		    $this->db = rcube_db::factory($this->cfg['dsn'], '', FALSE);
-	    }
+            if (!class_exists('rcube_db')) {
+                $dsn = MDB2::parseDSN($this->rcmail->config->get('db_dsnw'));
+            } else {
+                $dsn = rcube_db::parse_dsn($this->rcmail->config->get('db_dsnw'));
+            }
+        } else {
+            if(!class_exists('rcube_db')) {
+                $this->db = new rcube_mdb2($this->cfg['dsn'], '', FALSE);
+                $dsn = MDB2::parseDSN($this->cfg['dsn']);
+            } else {
+                $this->db = rcube_db::factory($this->cfg['dsn'], '', FALSE);
+                $dsn = rcube_db::parse_dsn($this->cfg['dsn']);
+            }
             $this->db->db_connect('w');
 
             $this->db->set_debug((bool) $this->rcmail->config->get('sql_debug'));
-            $dsn = MDB2::parseDSN($this->cfg['dsn']);
             $this->db->set_debug(true);
 
         }
