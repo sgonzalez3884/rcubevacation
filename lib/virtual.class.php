@@ -22,8 +22,12 @@ class Virtual extends VacationDriver {
         if (empty($this->cfg['dsn'])) {
             $this->db = $this->rcmail->db;
             $dsn = MDB2::parseDSN($this->rcmail->config->get('db_dsnw'));
-        } else {
-            $this->db = new rcube_mdb2($this->cfg['dsn'], '', FALSE);
+	} else {
+	    if(!class_exists('rcube_db')) {
+	            $this->db = new rcube_mdb2($this->cfg['dsn'], '', FALSE);
+	    } else {
+		    $this->db = rcube_db::factory($this->cfg['dsn'], '', FALSE);
+	    }
             $this->db->db_connect('w');
 
             $this->db->set_debug((bool) $this->rcmail->config->get('sql_debug'));
