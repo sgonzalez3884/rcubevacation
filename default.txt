@@ -1,8 +1,9 @@
-Hi,
+Thank you for your email.  
 
-Please ask your system administrator to translate this file (default.txt).
+I will be out of the office from %%%START_DATE%%% through %%%END_DATE%%% with limited access to email.  
 
-He can set a better default text for out of office replies.
+I will return to the office on %%%RETURN_DATE%%%%, and will gladly respond to your email at that time.
 
-Feel free to edit this text.
+However, if you need immediate assistance, please contact %%%BACKUP_NAME%%% at %%%BACKUP_EMAIL%%%, %%BACKUP_PHONE%% %%%BACKUP_EXTENSION%%%
 
+Thank you.
