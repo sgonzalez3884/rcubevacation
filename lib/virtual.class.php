@@ -99,12 +99,11 @@ class Virtual extends VacationDriver {
         // Force active to be boolean
         $origVacArr['active'] = ($origVacArr['active'] == 1);
 
-        // Check for changes
+        // Check for E-Mail notification changes
         if ($origVacArr['subject'] != $this->subject ||
             $origVacArr['body'] != $this->body ||
-            $origVacArr['active'] != $this->enable ||
-            $origVacArr['keepcopy'] != $this->keepcopy) {
-            
+            $origVacArr['active'] != $this->enable) {
+
             // We store since version 1.6 all data into one row.
             $aliasArr = array();
 
@@ -152,6 +151,7 @@ class Virtual extends VacationDriver {
             // Set as active if user requested AND subject and body are nonempty
             if ($this->enable && $this->body != "" && $this->subject != "") {
                 $enable_vacation = 1;
+                $aliasArr[] = '%g';
             } else {
                 $enable_vacation = 0;
             }
@@ -166,37 +166,38 @@ class Virtual extends VacationDriver {
                             'message' => "Vacation plugin: Error while saving records to {$this->cfg['dbase']}.vacation table. <br/><br/>" . $error
                         ), true, true);
             }
-            $aliasArr[] = '%g';
 
+        }
 
-            // Keep a copy of the mail if explicitly asked for or when using vacation
-            $always = (isset($this->cfg['always_keep_copy']) && $this->cfg['always_keep_copy']);
-            if ($this->keepcopy || in_array('%g', $aliasArr) || $always) {
-                $aliasArr[] = '%e';
-            }
+        // Forwarding Options
 
-            // Set a forward
-            if ($this->forward != null) {
-                $aliasArr[] = '%f';
-            }
+        // Keep a copy of the mail if explicitly asked for or when using vacation
+        $always = (isset($this->cfg['always_keep_copy']) && $this->cfg['always_keep_copy']);
+        if ($this->keepcopy || in_array('%g', $aliasArr) || $always) {
+            $aliasArr[] = '%e';
+        }
 
-            // Aliases are re-created if $sqlArr is not empty.
-            $sql = $this->translate($this->cfg['delete_query']);
+        // Set a forward
+        if ($this->forward != null) {
+            $aliasArr[] = '%f';
+        }
+
+        // Aliases are re-created if $sqlArr is not empty.
+        $sql = $this->translate($this->cfg['delete_query']);
+        $this->db->query($sql);
+
+        // One row to store all aliases
+        if (!empty($aliasArr)) {
+
+            $alias = join(",", $aliasArr);
+            $sql = str_replace('%g', $alias, $this->cfg['insert_query']);
+            $sql = $this->translate($sql);
+
             $this->db->query($sql);
-
-            // One row to store all aliases
-            if (!empty($aliasArr)) {
-
-                $alias = join(",", $aliasArr);
-                $sql = str_replace('%g', $alias, $this->cfg['insert_query']);
-                $sql = $this->translate($sql);
-
-                $this->db->query($sql);
-                if ($error = $this->db->is_error()) {
-                    raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
-                                'message' => "Vacation plugin: Error while executing {$this->cfg['insert_query']} <br/><br/>" . $error
-                            ), true, true);
-                }
+            if ($error = $this->db->is_error()) {
+                raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
+                            'message' => "Vacation plugin: Error while executing {$this->cfg['insert_query']} <br/><br/>" . $error
+                        ), true, true);
             }
         }
         return true;
