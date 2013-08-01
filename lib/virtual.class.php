@@ -150,15 +150,8 @@ class Virtual extends VacationDriver {
             }
 
             // Set as active if user requested AND subject and body are nonempty
-            if ($this->enable) {
-                if ($this->body != "" && $this->subject != "") {
-                    $enable_vacation = 1;
-                } else {
-                    // FIXME: Does this display to the user?  We want to display this in the saved message!
-                    raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
-                                'message' => "Vacation plugin: Cannot activate vacation message if subject or body is blank! <br/><br/>"
-                            ), true, true);
-                }
+            if ($this->enable && $this->body != "" && $this->subject != "") {
+                $enable_vacation = 1;
             } else {
                 $enable_vacation = 0;
             }
