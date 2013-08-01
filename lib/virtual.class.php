@@ -92,49 +92,76 @@ class Virtual extends VacationDriver {
      * @return boolean status indicator of save
      */
     public function setVacation() {
-        // If there is an existing entry in the vacation table, delete it.
-        // This also triggers the cascading delete on the vacation_notification, but's ok for now.
 
-        // We store since version 1.6 all data into one row.
-        $aliasArr = array();
+        // Get the original vacation data
+        $origVacArr = $this->_get();
+        $origVacArr['active'] = ($origVacArr['active'] == 1);
 
-        // Sets class property
-        $this->domain_id = $this->domainLookup();
+        // Check for changes
+        if ($origVacArr['subject'] != $this->subject ||
+            $origVacArr['body'] != $this->body ||
+            $origVacArr['active'] != $this->enable ||
+            $origVacArr['keepcopy'] != $this->keepcopy) {
+            
+            // We store since version 1.6 all data into one row.
+            $aliasArr = array();
 
-        $sql = sprintf("UPDATE %s.vacation SET created=now(),active=0 WHERE email='%s'", $this->cfg['dbase'], Q($this->user->data['username']));
+            // Sets class property
+            $this->domain_id = $this->domainLookup();
 
+            $sql = sprintf("UPDATE %s.vacation SET created=now(),active=0 WHERE email='%s'", $this->cfg['dbase'], Q($this->user->data['username']));
 
-        $this->db->query($sql);
+            $this->db->query($sql);
 
-        $update = ($this->db->affected_rows() == 1);
+            $update = ($this->db->affected_rows() == 1);
 
-        // Delete the alias for the vacation transport (Postfix)
-        $sql = $this->translate($this->cfg['delete_query']);
+            // Delete the alias for the vacation transport (Postfix)
+            $sql = $this->translate($this->cfg['delete_query']);
 
-        $this->db->query($sql);
-        if ($error = $this->db->is_error()) {
-            if (strpos($error, "no such field")) {
-                $error = " Configure either domain_lookup_query or use %d in config.ini's delete_query rather than %i. <br/><br/>";
+            $this->db->query($sql);
+            if ($error = $this->db->is_error()) {
+                if (strpos($error, "no such field")) {
+                    $error = " Configure either domain_lookup_query or use %d in config.ini's delete_query rather than %i. <br/><br/>";
+                }
+
+                raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
+                            'message' => "Vacation plugin: Error while saving records to {$this->cfg['dbase']}.vacation table. <br/><br/>" . $error
+                        ), true, true);
+
             }
 
-            raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
-                        'message' => "Vacation plugin: Error while saving records to {$this->cfg['dbase']}.vacation table. <br/><br/>" . $error
-                    ), true, true);
+            // Delete the entires for people already notified
+            $sql = sprintf("DELETE FROM %s.vacation_notification WHERE on_vacation='%s'", $this->cfg['dbase'], Q($this->user->data['username']));
 
-        }
+            $this->db->query($sql);
+            if ($error = $this->db->is_error()) {
+                raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
+                            'message' => "Vacation plugin: Error while deleting old notification records from {$this->cfg['dbase']}.vacation_notification table. <br/><br/>"
+                        ), true, true);
+            }
 
-
-        // (Re)enable the vacation message and the vacation transport alias
-        if ($this->enable && $this->body != "" && $this->subject != "") {
 
             if (!$update) {
                 $sql = "INSERT INTO {$this->cfg['dbase']}.vacation  VALUES (?,?,?,'',?,NOW(),1)";
             } else {
-                $sql = "UPDATE {$this->cfg['dbase']}.vacation SET email=?,subject=?,body=?,domain=?,active=1 WHERE email=?";
+                $sql = "UPDATE {$this->cfg['dbase']}.vacation SET email=?,subject=?,body=?,domain=?,active=? WHERE email=?";
             }
 
+            // Set as active if user requested AND subject and body are nonempty
+            if ($this->enable) {
+                if ($this->body != "" && $this->subject != "") {
+                    $enable_vacation = 1;
+                } else {
+                    // FIXME: Does this display to the user?  We want to display this in the saved message!
+                    raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
+                                'message' => "Vacation plugin: Cannot activate vacation message if subject or body is blank! <br/><br/>"
+                            ), true, true);
+                }
+            } else {
+                $enable_vacation = 0;
+            }
 
-            $this->db->query($sql, Q($this->user->data['username']), $this->subject, $this->body, $this->domain,Q($this->user->data['username']));
+            $this->db->query($sql, Q($this->user->data['username']), $this->subject, $this->body, $this->domain, $enable_vacation, Q($this->user->data['username']));
             if ($error = $this->db->is_error()) {
                 if (strpos($error, "no such field")) {
                     $error = " Configure either domain_lookup_query or use \%d in config.ini's insert_query rather than \%i<br/><br/>";
@@ -145,36 +172,36 @@ class Virtual extends VacationDriver {
                         ), true, true);
             }
             $aliasArr[] = '%g';
-        }
 
 
-        // Keep a copy of the mail if explicitly asked for or when using vacation
-        $always = (isset($this->cfg['always_keep_copy']) && $this->cfg['always_keep_copy']);
-        if ($this->keepcopy || in_array('%g', $aliasArr) || $always) {
-            $aliasArr[] = '%e';
-        }
+            // Keep a copy of the mail if explicitly asked for or when using vacation
+            $always = (isset($this->cfg['always_keep_copy']) && $this->cfg['always_keep_copy']);
+            if ($this->keepcopy || in_array('%g', $aliasArr) || $always) {
+                $aliasArr[] = '%e';
+            }
 
-        // Set a forward
-        if ($this->forward != null) {
-            $aliasArr[] = '%f';
-        }
+            // Set a forward
+            if ($this->forward != null) {
+                $aliasArr[] = '%f';
+            }
 
-        // Aliases are re-created if $sqlArr is not empty.
-        $sql = $this->translate($this->cfg['delete_query']);
-        $this->db->query($sql);
-
-        // One row to store all aliases
-        if (!empty($aliasArr)) {
-
-            $alias = join(",", $aliasArr);
-            $sql = str_replace('%g', $alias, $this->cfg['insert_query']);
-            $sql = $this->translate($sql);
-
+            // Aliases are re-created if $sqlArr is not empty.
+            $sql = $this->translate($this->cfg['delete_query']);
             $this->db->query($sql);
-            if ($error = $this->db->is_error()) {
-                raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
-                            'message' => "Vacation plugin: Error while executing {$this->cfg['insert_query']} <br/><br/>" . $error
-                        ), true, true);
+
+            // One row to store all aliases
+            if (!empty($aliasArr)) {
+
+                $alias = join(",", $aliasArr);
+                $sql = str_replace('%g', $alias, $this->cfg['insert_query']);
+                $sql = $this->translate($sql);
+
+                $this->db->query($sql);
+                if ($error = $this->db->is_error()) {
+                    raise_error(array('code' => 601, 'type' => 'db', 'file' => __FILE__,
+                                'message' => "Vacation plugin: Error while executing {$this->cfg['insert_query']} <br/><br/>" . $error
+                            ), true, true);
+                }
             }
         }
         return true;
