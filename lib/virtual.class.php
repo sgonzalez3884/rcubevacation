@@ -95,6 +95,8 @@ class Virtual extends VacationDriver {
 
         // Get the original vacation data
         $origVacArr = $this->_get();
+
+        // Force active to be boolean
         $origVacArr['active'] = ($origVacArr['active'] == 1);
 
         // Check for changes
