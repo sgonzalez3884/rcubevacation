@@ -1,3 +1,6 @@
 > extra/virtual_vacation/vacation.pl
   * Separate the configuration from the script
   * See: http://www.allgoodbits.org/articles/view/24
+
+> lib/*
+  * make save() save changes to the message whether or not it is active (this happens for sure on virtual driver
