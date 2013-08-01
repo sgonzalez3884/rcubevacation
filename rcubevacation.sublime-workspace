@@ -1,0 +1,424 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"html",
+				"htmlvardump"
+			],
+			[
+				"altid",
+				"altid"
+			],
+			[
+				"FAM",
+				"FAM"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
+				"if",
+				"if	if …"
+			],
+			[
+				"zi",
+				"zipcode"
+			],
+			[
+				"query",
+				"query_result"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 92.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"docb",
+				"DocBlockr: Decorate line comment"
+			],
+			[
+				"lint",
+				"Preferences: SublimeLinter Settings – Default"
+			],
+			[
+				"Snippet: ",
+				"Snippet: REQUEST['…']"
+			],
+			[
+				"linter",
+				"Preferences: SublimeLinter Settings – User"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			],
+			[
+				"htm",
+				"Set Syntax: HTML"
+			],
+			[
+				"snipp",
+				"Snippet: html"
+			],
+			[
+				"snippet",
+				"Snippet: Lorem ipsum"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"co",
+				"Code Folding: Unfold All"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"",
+				"About"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/registration-display.php",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/registration.php",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/registration-step2.php",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/includes/checkout_firstdata.php",
+		"/home/sgonzalez/.config/sublime-text-2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/home/sgonzalez/.config/sublime-text-2/Packages/User/SublimeLinter.sublime-settings",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/includes/functions.php",
+		"/home/sgonzalez/Sublime Notes.txt",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/includes/load_config.php",
+		"/home/sgonzalez/.config/sublime-text-2/Packages/SideBarEnhancements/messages/11.13.2012.1305.0.txt",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/includes/config.php",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/includes/checkout_cartbuilder.php",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/home/sgonzalez/local/mail.sd.www/test.sele-dent.com/htdocs/getforms.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/registration-step2.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/registration.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/css/style.css",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/registration-display.php",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/sele-care.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/sele-dent_discount.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/includes/functions.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/.htaccess",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/includes/config.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/ajax_front_user.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/testimonials.php",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/js/ga.js",
+		"/home/sgonzalez/aria_active_claim/.gitignore",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/mnt/stor/sgonzalez/mail.sd.www/test.sele-dent.com/htdocs/getforms.php",
+		"/home/sgonzalez/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"htmlvardump",
+			"refid",
+			"curr",
+			"inserted_id",
+			"curren",
+			"store_registration_step_2",
+			"inserted_id",
+			"insert_id",
+			"ordersrc",
+			"($",
+			"ordersrc",
+			"config",
+			"gordernum",
+			"config",
+			"$msg",
+			"group_long",
+			"group",
+			"result",
+			"$result",
+			"insert",
+			"insert_id",
+			"gender",
+			"Lorem",
+			" ",
+			"test",
+			"Search",
+			"Command",
+			"SHFT",
+			"Switch",
+			"elect",
+			"CTRL",
+			"SHFT",
+			"SHIFT",
+			"keys",
+			"shift",
+			"slurp_find_string",
+			"Split",
+			"split",
+			"Split",
+			"style",
+			"copyReg",
+			"copyRegistrationInformation",
+			"onclick",
+			"copyRegistrationInformation",
+			"classname",
+			"button",
+			"refid",
+			"group1",
+			"www.sele-dent.com",
+			"config",
+			"www",
+			"www.sele-dent.com",
+			"www",
+			"www.sele",
+			"http://www.sele-dent.com",
+			"('').",
+			"result",
+			"email",
+			"processLink",
+			"validateForm",
+			"_front_u",
+			"validateFormAj",
+			"+d",
+			"claims",
+			"no_of_fields"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"first",
+				"includes/checkout_firstdata.php"
+			],
+			[
+				"step",
+				"registration-step2.php"
+			],
+			[
+				"chec",
+				"includes/checkout_firstdata.php"
+			],
+			[
+				"func",
+				"includes/functions.php"
+			],
+			[
+				"load_",
+				"includes/load_config.php"
+			],
+			[
+				"config",
+				"includes/config.php"
+			],
+			[
+				"che",
+				"includes/checkout_cartbuilder.php"
+			],
+			[
+				"regi",
+				"registration-display.php"
+			],
+			[
+				"reg",
+				"registration-step2.php"
+			],
+			[
+				"getform",
+				"getforms.php"
+			],
+			[
+				"funct",
+				"includes/functions.php"
+			],
+			[
+				"",
+				"~/Sublime Notes.txt"
+			],
+			[
+				"style.css",
+				"htdocs/css/style.css"
+			],
+			[
+				"sele-care",
+				"htdocs/sele-care.php"
+			],
+			[
+				"_discou",
+				"htdocs/sele-dent_discount.php"
+			],
+			[
+				"-discout",
+				"htdocs/sele-dent_discount.php"
+			],
+			[
+				"functio",
+				"htdocs/includes/functions.php"
+			],
+			[
+				"htacc",
+				"htdocs/.htaccess"
+			],
+			[
+				"regis",
+				"htdocs/registration.php"
+			],
+			[
+				"sele-c",
+				"htdocs/sele-care.php"
+			],
+			[
+				"testi",
+				"htdocs/testimonials.php"
+			],
+			[
+				"aj",
+				"htdocs/ajax_front_user.php"
+			],
+			[
+				"ga.",
+				"htdocs/js/ga.js"
+			],
+			[
+				"clacon",
+				"app/controllers/claims_controller.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 243.0,
+	"status_bar_visible": true
+}
