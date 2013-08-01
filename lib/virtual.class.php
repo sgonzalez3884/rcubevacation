@@ -16,9 +16,12 @@ class Virtual extends VacationDriver {
     private $db, $domain, $domain_id, $goto = "";
     private $db_user;
 
+    /**
+     * Initialize the DB connection
+     */
     public function init() {
-        // Use the DSN from db.inc.php or a dedicated DSN defined in config.ini
 
+        // Use the DSN from db.inc.php or a dedicated DSN defined in config.ini
         if (empty($this->cfg['dsn'])) {
             $this->db = $this->rcmail->db;
             if (!class_exists('rcube_db')) {
@@ -49,9 +52,10 @@ class Virtual extends VacationDriver {
         }
     }
 
-    /*
-	 * @return Array Values for the form
-    */
+    /**
+     * Pull DB data for GET request on configuration form
+     * @return array form data
+     */
     public function _get() {
         $vacArr = array("subject"=>"", "body"=>"");
         //   print_r($vacArr);
@@ -82,6 +86,11 @@ class Virtual extends VacationDriver {
     /*
 	 * @return boolean True on succes, false on failure
     */
+   
+    /**
+     * Store the vacation data in the DB
+     * @return boolean status indicator of save
+     */
     public function setVacation() {
         // If there is an existing entry in the vacation table, delete it.
         // This also triggers the cascading delete on the vacation_notification, but's ok for now.
@@ -171,16 +180,21 @@ class Virtual extends VacationDriver {
         return true;
     }
 
-    /*
-	 * @return string SQL query with substituted parameters
-    */
+    /**
+     * Translate the parameters in the passed SQL query with the proper parameters
+     * @param  string $query Generic SQL query
+     * @return string        Translated SQL query
+     */
     private function translate($query) {
         return str_replace(array('%e', '%d', '%i', '%g', '%f', '%m'),
                 array($this->user->data['username'], $this->domain, $this->domain_id,
                     Q($this->user->data['username']) . "@" . $this->cfg['transport'], $this->forward, $this->cfg['dbase']), $query);
     }
 
-// Sets %i. Lookup the domain_id based on the domainname. Returns the domainname if the query is empty
+    /**
+     * Determine the proper domain_id to use
+     * @return string domain name to use
+     */
     private function domainLookup() {
         // Sets the domain
         list($username, $this->domain) = explode("@", $this->user->get_username());
@@ -199,11 +213,10 @@ class Virtual extends VacationDriver {
         }
     }
 
-    /*Creates configuration file for vacation.pl
-	 *
-	 * @param array dsn
-	 * @return void
-    */
+    /**
+     * Creates a configuration file for vacation.pl
+     * @param  array  $dsn DB Connection information
+     */
     private function createVirtualConfig(array $dsn) {
 
         $virtual_config = "/etc/postfixadmin/";
@@ -231,10 +244,10 @@ class Virtual extends VacationDriver {
         }
     }
 
-    /*
-			Retrieves the localcopy and/or forward settings.
-		* @return array with virtual aliases
-    */
+    /**
+     * Retrieve the local copy and/or forward settings.
+     * @return array local copy/forward settins
+     */
     private function virtual_alias() {
         $forward = "";
         $enabled = false;
@@ -278,7 +291,9 @@ class Virtual extends VacationDriver {
         return array("forward"=>substr($forward, 0,  - 1), "keepcopy"=>$keepcopy, "enabled"=>$enabled);
     }
 
-// Destroy the database connection of our temporary database connection
+    /**
+     * Destroy the database connection.
+     */
     public function __destruct() {
         if (!empty($this->cfg['dsn']) && is_resource($this->db)) {
             $this->db = null;
